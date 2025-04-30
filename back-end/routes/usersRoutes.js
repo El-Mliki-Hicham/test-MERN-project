@@ -4,7 +4,7 @@ var {getUsers , storeUser} = require('../controllers/userController');
 const userValidation = require('../validators/userValidator');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res, next) {  
   res.send('route test');
 });
 

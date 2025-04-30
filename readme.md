@@ -29,6 +29,8 @@ Folder Structure
 
 
 installation : 
+back-end packages =>
 npm install express-validator
 npm install nodemon
 npm install dotenv 
+npm install bcryptjs

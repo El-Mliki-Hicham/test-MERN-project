@@ -5,30 +5,41 @@ const User = require('../models/User');
 exports.getUsers = async (req, res) => {
     try{
         const users = await User.find();
-        res.status(200).json(users)
+        res.status(200).json({
+            success: true,
+            data:users
+        });
     }catch(error){
-        res.status(500).json({message:"Error in fetching users",error:error.message});
+        res.status(500).json({ 
+            success: false,
+            message: "Error fetching users",
+            error: error.message
+    });
     }
   };
 
-
-exports.storeUser = async(req , res ) => {
-
-    try{
+exports.storeUser = async(req, res) => {
+    try {
         // check validation request
         const validationError = validationResult(req);
         if (!validationError.isEmpty()) {
-            return res.status(400).json({ errors: validationError.array() });
-          }
+            return res.status(500).json({ 
+                success: false,
+                errors: validationError.array() 
+            });
+        }
           
-          console.log(req.body);
-          // detect request body
-        const {name,email,password} = req.body
+        console.log(req.body);
+        // detect request body
+        const {name, email, password} = req.body
         
         // check if user alredy exist 
         const userExists = await User.findOne({email});
         if(userExists){
-            res.status(400).json({message :"User already exist"});
+            return res.status(500).json({
+                success: false,
+                message: "User already exists"
+            });
         }
         
         //generate salt and hash password
@@ -39,13 +50,17 @@ exports.storeUser = async(req , res ) => {
         const user = new User({name,email,password:hashedPassword});
          await user.save();
 
-         res.status(201).json({message:"User has been created",
-            data:user
-         })
+        res.status(200).json({
+            success: true,
+            message: "User has been created successfully",
+            data: user
+        });
 
-    }catch(error){
+    } catch(error) {
         res.status(500).json({
-            message:"Error in store user",error:error.message
+            success: false,
+            message: "Error in storing user",
+            error: error.message
         });
     }
 
