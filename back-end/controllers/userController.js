@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 exports.getUsers = async (req, res) => {
@@ -22,7 +23,7 @@ exports.storeUser = async(req , res ) => {
           
           console.log(req.body);
           // detect request body
-        const {name,email} = req.body
+        const {name,email,password} = req.body
         
         // check if user alredy exist 
         const userExists = await User.findOne({email});
@@ -30,8 +31,12 @@ exports.storeUser = async(req , res ) => {
             res.status(400).json({message :"User already exist"});
         }
         
+        //generate salt and hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         // store user
-        const user = new User({name,email,password});
+        const user = new User({name,email,password:hashedPassword});
          await user.save();
 
          res.status(201).json({message:"User has been created",
