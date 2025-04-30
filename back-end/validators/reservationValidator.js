@@ -30,10 +30,10 @@ const reservationValidation = [
     .custom((value) => value >= 0)
     .withMessage("Total price cannot be negative"),
 
-  body("status")
-    .optional()
-    .isIn(["pending", "confirmed", "cancelled"])
-    .withMessage("Invalid status value"),
+//   body("status")
+//     .optional()
+//     .isIn(["pending", "confirmed", "cancelled"])
+//     .withMessage("Invalid status value"),
 ];
 
 module.exports = reservationValidation;

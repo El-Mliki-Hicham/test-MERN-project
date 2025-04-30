@@ -4,6 +4,6 @@ const {getReservations ,storeReservation} = require('../controllers/reservationC
 const reservationValidation = require('../validators/reservationValidator')
 
 router.get('/index',getReservations);
-router.get('/store',reservationValidation,storeReservation);
+router.post('/store',reservationValidation,storeReservation);
 
 module.exports = router;
