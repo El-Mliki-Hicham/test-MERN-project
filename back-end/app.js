@@ -10,10 +10,16 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usersRoutes');
 var reservationsRouter = require('./routes/reservationsRoutes');
 
+//cors 
+const cors = require('cors');
+
 // connect to database MB
 connectDB();
 
 var app = express();
+
+// Enable CORS
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

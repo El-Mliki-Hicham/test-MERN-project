@@ -34,3 +34,4 @@ npm install express-validator
 npm install nodemon
 npm install dotenv 
 npm install bcryptjs
+npm install cors
