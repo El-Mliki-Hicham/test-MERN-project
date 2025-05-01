@@ -1,9 +1,9 @@
 const {validationResult} = require("express-validator");
-const Reservation = require("../models/Reservation.js");
+const reservationService = require("../services/reservationService");
 
 exports.getReservations = async (req, res) => {
   try {
-    const reservations = await Reservation.find();
+    const reservations = await reservationService.getAllReservations();
     res.status(200).json({
       success: true,
       data: reservations,
@@ -29,7 +29,7 @@ exports.storeReservation = async (req, res) => {
       });
   }
 
-    const reservation = new Reservation(req.body);
+  const reservation = await reservationService.createReservation(req.body);
     await reservation.save();
 
     res.status(200).json({
