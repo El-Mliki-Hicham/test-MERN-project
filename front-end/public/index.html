@@ -3,6 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/vendor/animate/animate.css" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/vendor/css-hamburgers/hamburgers.min.css" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/vendor/select2/select2.min.css" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/css/util.css" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/css/main.css" />
+   
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -39,5 +47,22 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!-- jQuery and other scripts -->
+    <script src="%PUBLIC_URL%/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="%PUBLIC_URL%/vendor/bootstrap/js/popper.js"></script>
+    <script src="%PUBLIC_URL%/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="%PUBLIC_URL%/vendor/select2/select2.min.js"></script>
+    <script src="%PUBLIC_URL%/vendor/tilt/tilt.jquery.min.js"></script> 
+    <script>
+      window.addEventListener("load", function () {
+        if (window.$ && $(".js-tilt").tilt) {
+          $(".js-tilt").tilt({
+            scale: 1.1,
+          });
+        }
+      });
+    </script>
+    <script src="%PUBLIC_URL%/js/main.js"></script>
   </body>
 </html>

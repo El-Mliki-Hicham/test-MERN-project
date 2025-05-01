@@ -1,19 +1,32 @@
-import React, { useState } from 'react';
-import { storeReservation } from '../../../services/reservationService';
+import React, { useEffect, useState } from 'react';
+import { getUsers } from '../../../services/userService';
 
-const ReservationForm = () => {
-  const [form, setForm] = useState({ name: '', status: '' });
+const ReservationForm = ({ onCreate }) => {
+  const [form, setForm] = useState({ message: "", reservationDate: "", service: "", totalPrice: "", user: "" });
+  const [users, setUsers] = useState([]);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    // fetch users from service
+    getUsers()
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+      });
+  }, []);
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const data = await storeReservation(form);
-      alert('Reservation created successfully!');
-      console.log(data);
+      // Send form data to the parent
+      await onCreate(form); 
+      // Reset the form
+      setForm({ message: "", reservationDate: "", service: "", totalPrice: "", user: "" }); 
     } catch (err) {
       alert('Error creating reservation');
       console.error(err);
@@ -21,36 +34,36 @@ const ReservationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="date" 
-        name="reservationDate" 
-        placeholder="Reservation Date"
-        onChange={handleChange}
-      />
-      <input 
-        name="messsage" 
-        placeholder="Your Message" 
-        onChange={handleChange}
-      />
-      <input 
-        name="service" 
-        placeholder="Service Type"
-        onChange={handleChange}
-      />
-      <input 
-        type="number"
-        name="totalPrice" 
-        placeholder="Total Price"
-        onChange={handleChange}
-      />
-      <input 
-        name='user'
-        placeholder="User Name"
-        value="68126c0c8c9d6a529aee0371"
-        onChange={handleChange}
-      />
-      <button type="submit">Create Reservation</button>
+    <form className="login100-form validate-form" onSubmit={handleSubmit}>
+      <span className="login100-form-title">Create Reservation</span>
+      <div className="wrap-input100">
+        <input className="input100" type="date" name="reservationDate" value={form.reservationDate} onChange={handleChange} />
+        <span className="focus-input100"></span>
+      </div>
+      <div className="wrap-input100">
+        <input className="input100" name="message" placeholder="Your Message" value={form.message} onChange={handleChange} />
+        <span className="focus-input100"></span>
+      </div>
+      <div className="wrap-input100">
+        <input className="input100" name="service" placeholder="Service Type" value={form.service} onChange={handleChange} />
+        <span className="focus-input100"></span>
+      </div>
+      <div className="wrap-input100">
+        <input className="input100" type="number" name="totalPrice" placeholder="Total Price" value={form.totalPrice} onChange={handleChange} />
+        <span className="focus-input100"></span>
+      </div>
+      <div className="wrap-input100">
+        <select className="input100" name="user" value={form.user} onChange={handleChange}>
+          <option value="">Select User</option>
+          {users.map(user => (
+            <option key={user._id} value={user._id}>{user.name}</option>
+          ))}
+        </select>
+        <span className="focus-input100"></span>
+      </div>
+      <div className="container-login100-form-btn">
+        <button className="login100-form-btn" type="submit">Create Reservation</button>
+      </div>
     </form>
   );
 };

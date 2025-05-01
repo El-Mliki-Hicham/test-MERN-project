@@ -13,12 +13,12 @@ const reservationValidation = [
     .isISO8601()
     .withMessage("Invalid date format"),
 
-  body("messsage")
+  body("message")
     .notEmpty()
-    .withMessage("Message is required")
+    .withMessage("message is required")
     .trim()
     .isLength({ max: 500 })
-    .withMessage("Message cannot exceed 500 characters"),
+    .withMessage("message cannot exceed 500 characters"),
 
   body("service").notEmpty().withMessage("Service is required").trim(),
 
@@ -30,10 +30,10 @@ const reservationValidation = [
     .custom((value) => value >= 0)
     .withMessage("Total price cannot be negative"),
 
-//   body("status")
-//     .optional()
-//     .isIn(["pending", "confirmed", "cancelled"])
-//     .withMessage("Invalid status value"),
+  body("status")
+    .optional()
+    .isIn(["pending", "confirmed", "cancelled"])
+    .withMessage("Invalid status value"),
 ];
 
 module.exports = reservationValidation;
