@@ -29,7 +29,7 @@ exports.storeReservation = async (req, res) => {
       });
   }
 
-  const reservation = await reservationService.createReservation(req.body);
+  const reservation = await reservationService.storeReservation(req.body);
     await reservation.save();
 
     res.status(200).json({

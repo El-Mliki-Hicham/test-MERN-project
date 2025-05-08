@@ -21,3 +21,16 @@ exports.createUser = async ({ name, email, password }) => {
   await user.save();
   return user;
 };
+
+exports.loginUser = async (email, password) => {
+  // Find user by email
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error('User not found');
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error('Invalid credentials');
+  }
+  return user;
+}

@@ -42,3 +42,38 @@ exports.storeUser = async (req, res) => {
     });
   }
 };
+
+exports.login = async (req , res)=> {
+  const validationError = validationResult(req);
+  if (!validationError.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: validationError.array(),
+    });
+  }
+
+  try {
+    const { email, password } = req.body;
+    const user = await userService.loginUser(email, password);
+    
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: user
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error during login",
+      error: error.message
+    });
+  }
+}
